@@ -4,6 +4,24 @@ THIS_DIR=$(dirname "$THIS_FILE")
 if [[ -z $DEMO_SLAM ]]; then
     DEMO_SLAM=demo_slam
 fi
+if [[ -z "$JAFAR_DIR" ]]; then
+    testPath=$(which $DEMO_SLAM)
+    testPath=$(python -c "import os; print os.path.normcase(os.path.normpath(os.path.realpath(os.path.abspath('''$testPath'''))))")
+    # try to find JAFAR_DIR by checking parent dirs
+    relCam=/modules/gdhe/data/camera.tcl
+    lastPath=""
+    while [[ -n "$testPath" && "$lastPath" != "$testPath" ]]; do
+        if [[ -f "${testPath}/modules/gdhe/data/camera.tcl" ]]; then
+            export JAFAR_DIR="$testPath"
+            break
+        fi
+        lastPath="$testPath"
+        testPath=$(dirname "$lastPath")
+    done
+fi
+
+echo "JAFAR_DIR:" $JAFAR_DIR
+
 cmd=("$DEMO_SLAM" --replay=1  --robot=1 --pause=0 --dump=0 --log=1 --render-all=0 --disp-2d=1 --disp-3d=1 --data-path="$THIS_DIR" --config-setup=@/setup.cfg --config-estimation=@/estimation.cfg --rand-seed=0 --freq=100)
 echo "${cmd[@]}"
 eval "${cmd[@]}"
