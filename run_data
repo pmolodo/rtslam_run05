@@ -4,6 +4,6 @@ THIS_DIR=$(dirname "$THIS_FILE")
 if [[ -z $DEMO_SLAM ]]; then
     DEMO_SLAM=demo_slam
 fi
-cmd=("$DEMO_SLAM" --replay=1  --robot=1 --pause=0 --dump=1 --log=1 --render-all=0 --disp-2d=1 --disp-3d=1 --data-path="$THIS_DIR" --config-setup=@/setup.cfg --config-estimation=@/estimation.cfg --rand-seed=0 --freq=100)
+cmd=("$DEMO_SLAM" --replay=1  --robot=1 --pause=0 --dump=0 --log=1 --render-all=0 --disp-2d=1 --disp-3d=1 --data-path="$THIS_DIR" --config-setup=@/setup.cfg --config-estimation=@/estimation.cfg --rand-seed=0 --freq=100)
 echo "${cmd[@]}"
 eval "${cmd[@]}"
