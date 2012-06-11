@@ -1,0 +1,10 @@
+#!/bin/bash
+thisFile=$(python -c "import os; print os.path.normcase(os.path.normpath(os.path.realpath(os.path.abspath('''$0'''))))")
+thisDir=$(dirname "$thisFile")
+dirNameOnly=$(basename "$thisDir")
+parentDir=$(dirname "$thisDir")
+cd ${parentDir}
+zipFile=rtslam-${dirNameOnly}.zip
+echo $PWD
+rm ${zipFile}
+zip -ry ${zipFile} ${dirNameOnly}
